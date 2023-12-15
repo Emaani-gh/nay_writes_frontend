@@ -1,0 +1,27 @@
+
+
+.about{
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    background-color: #090D1F;
+    color: #C0C5D0;
+    padding: 2rem;
+}
+.imgDiv{
+    max-height: 50vh;
+    overflow: hidden;
+}
+
+.abt-me{
+
+}
+
+.about-ul li{
+    list-style-type:disc;
+}
+.about h4{
+    color: #FFFFFF;
+}
+img{
+
+}

@@ -1,0 +1,22 @@
+
+
+.main-footer{
+    margin-top: auto;
+  }
+  
+.footer{
+    display: flex;
+    padding: 1rem 0;
+}
+
+
+.copy{
+    margin-right: .5rem;
+}
+.f-menus{
+    display: flex;
+}
+
+li{
+    margin-right: .5rem;
+}

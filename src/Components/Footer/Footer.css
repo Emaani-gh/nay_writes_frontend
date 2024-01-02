@@ -2,11 +2,16 @@
 
 .main-footer{
     margin-top: auto;
+    background: linear-gradient(to right, #4F46E5, #F4511E);
   }
+
   
 .footer{
     display: flex;
     padding: 1rem 0;
+}
+.footer,.footer a{
+    color: #fff;
 }
 
 

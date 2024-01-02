@@ -1,49 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./header.css";
-import Hero from "../Hero";
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
   return (
     <div className="nav-wrapper">
-      <div className="">
+      <div className="container">
         <nav>
           <div className="logo">
-            <h4>N A Y WRITES </h4>
+            <NavLink to={"/"} className={"nav-link"} onClick={closeMenu}>
+              N A Y W R I T E
+            </NavLink>
           </div>
 
-          <ul className="menus">
+          <div
+            className={`hamburger ${menuOpen ? "open" : ""}`}
+            onClick={toggleMenu}
+          >
+            <div className="line"></div>
+            <div className="line"></div>
+            <div className="line"></div>
+          </div>
+
+          <ul className={`menus ${menuOpen ? "openMenu" : ""}`}>
             <li>
-              <NavLink to={"/"} className={"nav-link"}>
+              <NavLink to={"/"} className={"nav-link"} onClick={closeMenu}>
                 Blog
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/project"} className={"nav-link"}>
+              <NavLink
+                to={"/project"}
+                className={"nav-link"}
+                onClick={closeMenu}
+              >
                 Project
               </NavLink>
             </li>
             <li>
-              <NavLink className={"nav-link"} to={"about"}>
+              <NavLink className={"nav-link"} to={"/about"} onClick={closeMenu}>
                 About
               </NavLink>
             </li>
             <li>
-              <NavLink to={"newsletter"} className={"nav-link"}>
+              <NavLink
+                to={"/newsletter"}
+                className={"nav-link"}
+                onClick={closeMenu}
+              >
                 Newsletter
               </NavLink>
             </li>
-
-            <div className="hamburger">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
           </ul>
         </nav>
       </div>
-
-      {/* <Hero /> */}
     </div>
   );
 };

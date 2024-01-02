@@ -1,9 +1,11 @@
 import React from "react";
 import Hero from "../Components/Hero";
+import Header from "../Components/Header/Header";
 
 const Newsletter = () => {
   return (
     <>
+      <Header />
       <Hero />
       <div className="container newsletter">
         <h5>Newsletter</h5>

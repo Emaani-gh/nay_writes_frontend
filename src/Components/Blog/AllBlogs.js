@@ -1,30 +1,40 @@
 import React, { useEffect, useState } from "react";
-import image from "./images/2ndImg.jpg";
 import { Link } from "react-router-dom";
+import { sanitizeAndValidateHTML } from "../Helper";
 import axios from "axios";
 
 const AllBlogs = () => {
+  const api = process.env.REACT_APP_API_URL;
+
   const [blogs, setBlogs] = useState([]);
 
   const fetchBlogs = async () => {
-    const res = await axios.get("http://localhost:1337/api/blogs?populate=*");
+    const res = await axios.get(`${api}/blogs/public/`);
+
     setBlogs(res.data);
   };
+
   useEffect(() => {
     fetchBlogs();
   }, []);
 
   return (
     <div>
-      {blogs.data?.length > 0 ? (
+      {blogs.length > 0 ? (
         <div className="container all-blogs ">
           <h4>All blog posts</h4>
           <div className="grid-all-blogs m-grid">
-            {blogs?.data.map(
+            {blogs.map(
               (
                 {
-                  id,
-                  attributes: { Title, content, blogger, date, categories },
+                  _id,
+                  title,
+                  blogger,
+                  category,
+                  content,
+                  summary,
+                  image,
+                  updatedAt,
                 },
                 index
               ) => (
@@ -32,96 +42,17 @@ const AllBlogs = () => {
                   <div>
                     <img src={image} />
                   </div>
-                  <Link to={`/blogs/${id}`} className="card-content">
-                    <h6>{`${blogger} . ${date}`}</h6>
-                    <h4>{Title}</h4>
-                    <p>{content}</p>
+                  <Link to={`/blogs/${_id}`} className="card-content">
+                    <h6>{`${blogger} . ${updatedAt}`}</h6>
+                    <h4>{title}</h4>
+                    <p>{summary}</p>
                     <div>
-                      {categories.data &&
-                        categories.data.map(
-                          ({ attributes: { name } }, index) => (
-                            <span key={index}>{name}</span>
-                          )
-                        )}
+                      <span>{category}</span>
                     </div>
                   </Link>
                 </div>
               )
             )}
-
-            {/* <Link to={`/blogs/1`} className="card">
-            <div>
-              <img src={image} />
-            </div>
-            <div className="card-content">
-              <h6>Oliver Rhye . 1 Jan 2023</h6>
-              <h4>UX review presentations</h4>
-              <p>
-                How do you create compelling presentations that wow your
-                colleagues and impress your managers?
-              </p>
-              <div>
-                <span>Design</span>
-                <span>Research</span>
-                <span>Presentation</span>
-              </div>
-            </div>
-          </Link>
-
-          <Link className="card">
-            <div>
-              <img src={image} />
-            </div>
-            <div className="card-content">
-              <h6>Oliver Rhye . 1 Jan 2023</h6>
-              <h4>UX review presentations</h4>
-              <p>
-                How do you create compelling presentations that wow your
-                colleagues and impress your managers?
-              </p>
-              <div>
-                <span>Design</span>
-                <span>Research</span>
-                <span>Presentation</span>
-              </div>
-            </div>
-          </Link>
-          <Link className="card">
-            <div>
-              <img src={image} />
-            </div>
-            <div className="card-content">
-              <h6>Oliver Rhye . 1 Jan 2023</h6>
-              <h4>UX review presentations</h4>
-              <p>
-                How do you create compelling presentations that wow your
-                colleagues and impress your managers?
-              </p>
-              <div>
-                <span>Design</span>
-                <span>Research</span>
-                <span>Presentation</span>
-              </div>
-            </div>
-          </Link>
-          <Link className="card">
-            <div>
-              <img src={image} />
-            </div>
-            <div className="card-content">
-              <h6>Oliver Rhye . 1 Jan 2023</h6>
-              <h4>UX review presentations</h4>
-              <p>
-                How do you create compelling presentations that wow your
-                colleagues and impress your managers?
-              </p>
-              <div>
-                <span>Design</span>
-                <span>Research</span>
-                <span>Presentation</span>
-              </div>
-            </div>
-          </Link> */}
           </div>
         </div>
       ) : (

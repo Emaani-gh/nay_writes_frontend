@@ -2,12 +2,14 @@ import React from "react";
 import image from "./nay.jpg";
 import "./about.css";
 import Hero from "../../Components/Hero";
+import Header from "../../Components/Header/Header";
 
 const About = () => {
   return (
     <>
+      <Header />
       <Hero />
-      <div className="container about">
+      {/* <div className="container about">
         <div className="imgDiv">
           <img src={image} />
         </div>
@@ -66,7 +68,7 @@ const About = () => {
             <li>Bachelor's degree in Graphic Design</li>
           </ul>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

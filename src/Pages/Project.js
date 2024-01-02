@@ -1,12 +1,14 @@
 import React from "react";
 import image from "../Components/Blog/images/2ndImg.jpg";
 import Hero from "../Components/Hero";
+import Header from "../Components/Header/Header";
 
 const Project = () => {
   return (
     <>
+      <Header />
       <Hero />
-      <div className="container">
+      {/* <div className="container">
         <h4>List Project</h4>
         <div className="m-grid">
           <div className="card">
@@ -82,7 +84,7 @@ const Project = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

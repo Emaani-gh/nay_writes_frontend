@@ -73,6 +73,16 @@ const AdminHeader = () => {
                     Sign in
                   </NavLink>
                 </li>
+
+                <li>
+                  <NavLink
+                    to={"/admin/signup"}
+                    className={"nav-link"}
+                    onClick={closeMenu}
+                  >
+                    Sign up
+                  </NavLink>
+                </li>
               </>
             )}
           </ul>

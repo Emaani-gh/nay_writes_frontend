@@ -36,6 +36,7 @@ a{
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;
+  
 }
 
 h4{
@@ -47,9 +48,9 @@ h4{
 
  h6 {
     background: linear-gradient(to right, #f4511e, #4f46e5);
-    -webkit-text-fill-color: transparent; /* For Safari */
+    -webkit-text-fill-color: transparent; 
     background-clip: text;
-    color: transparent; /* For other browsers */
+    color: transparent; 
     padding: .5rem;
     font-size: .8rem;
   }

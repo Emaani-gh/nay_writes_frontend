@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -11,17 +11,7 @@ const CreateBlog = () => {
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [categ, setCateg] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
-
-  const fetchCateg = async () => {
-    const res = await axios.get(`${api}/categories`);
-    setCateg(res.data);
-  };
-
-  useEffect(() => {
-    // fetchCateg();
-  }, []);
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -86,36 +76,42 @@ const CreateBlog = () => {
         <div className="create-blog-container">
           <h2 className="heading">Create New Blog</h2>
           <form className="create-blog-form" onSubmit={(e) => handleSubmit(e)}>
-            <div className="form-group">
-              <label>Title:</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title || ""}
-                onChange={(e) => handleChange(e)}
-                required
-              />
+            {/*  */}
+
+            <div className="input-group">
+              <div className="form-group">
+                <label>Title:</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title || ""}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Blogger:</label>
+                <input
+                  type="text"
+                  name="blogger"
+                  value={formData.blogger || ""}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label>Blogger:</label>
-              <input
-                type="text"
-                name="blogger"
-                value={formData.blogger || ""}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Category:</label>
-              <input
-                type="text"
-                name="category"
-                value={formData.category || ""}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-              {/* <select
+
+            <div className="input-group">
+              <div className="form-group">
+                <label>Category:</label>
+                <input
+                  type="text"
+                  name="category"
+                  value={formData.category || ""}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                {/* <select
                 name="category"
                 value={formData.category || ""}
                 onChange={(e) => handleChange(e)}
@@ -128,17 +124,19 @@ const CreateBlog = () => {
                   </option>
                 ))}
               </select> */}
+              </div>
+              <div className="form-group">
+                <label>Summary:</label>
+                <input
+                  type="text"
+                  name="summary"
+                  value={formData.summary || ""}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label>Summary:</label>
-              <input
-                type="text"
-                name="summary"
-                value={formData.summary || ""}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-            </div>
+
             <div className="form-group">
               <label>Content:</label>
               <CKEditor

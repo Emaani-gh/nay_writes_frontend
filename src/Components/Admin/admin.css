@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
   }
   
   .login-form ,
@@ -159,7 +159,19 @@ thead{
     border: 1px solid #ccc;
     border-radius: 3px;
   }
+
+  .input-group{
+    display: flex;
+    justify-content: space-between;
+  }
   
+  .input-group .form-group {
+    flex-grow: 1;
+  }
+  
+  .input-group .form-group:nth-child(odd) {
+    margin-right: 10px; 
+  }
 
 
 

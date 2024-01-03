@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./admin.css";
 import { UserContext } from "../Context/UserContext";
@@ -7,8 +7,12 @@ import AdminHeader from "./AdminHeader";
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { actions } = useContext(UserContext);
-
+  const { authUser } = useContext(UserContext);
   const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    authUser && navigate("/admin/blogs");
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

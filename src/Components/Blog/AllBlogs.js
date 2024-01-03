@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { sanitizeAndValidateHTML } from "../Helper";
 import axios from "axios";
 
 const AllBlogs = () => {
@@ -26,16 +25,7 @@ const AllBlogs = () => {
           <div className="grid-all-blogs m-grid">
             {blogs.map(
               (
-                {
-                  _id,
-                  title,
-                  blogger,
-                  category,
-                  content,
-                  summary,
-                  image,
-                  updatedAt,
-                },
+                { _id, title, blogger, category, summary, image, updatedAt },
                 index
               ) => (
                 <div key={index} className="card">

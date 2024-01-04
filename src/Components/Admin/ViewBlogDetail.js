@@ -106,15 +106,64 @@ const ViewBlogDetail = () => {
         <div className="create-blog-container">
           <h2 className="heading">Edit Blog</h2>
           <form className="create-blog-form" onSubmit={(e) => handleSubmit(e)}>
-            <div className="form-group">
-              <label>Title:</label>
-              <input
-                type="text"
-                name="title"
-                required
-                value={formData.title || ""}
+            <div className="input-group">
+              <div className="form-group">
+                <label>Title:</label>
+                <input
+                  type="text"
+                  name="title"
+                  required
+                  value={formData.title || ""}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Blogger:</label>
+                <input
+                  type="text"
+                  name="blogger"
+                  required
+                  value={formData.blogger || ""}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            </div>
+
+            <div className="input-group">
+              <div className="form-group">
+                <label>Category:</label>
+                <input
+                  type="text"
+                  name="category"
+                  value={formData.category || ""}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                {/* <select
+                name="category"
+                value={formData.category || ""}
                 onChange={(e) => handleChange(e)}
-              />
+                required
+              >
+                <option value="">Select Category</option>
+                {categ.map((c, index) => (
+                  <option key={index} value={c.category_name}>
+                    {c.category_name}
+                  </option>
+                ))}
+              </select> */}
+              </div>
+              <div className="form-group">
+                <label>Summary:</label>
+                <input
+                  type="text"
+                  name="summary"
+                  value={formData.summary || ""}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+              </div>
             </div>
 
             <div className="form-group">
@@ -129,33 +178,6 @@ const ViewBlogDetail = () => {
                 }}
                 onReady={(editor) => {}}
               />
-            </div>
-
-            <div className="form-group">
-              <label>Blogger:</label>
-              <input
-                type="text"
-                name="blogger"
-                required
-                value={formData.blogger || ""}
-                onChange={(e) => handleChange(e)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Category:</label>
-              <select
-                name="category"
-                required
-                value={formData.category || ""}
-                onChange={(e) => handleChange(e)}
-              >
-                <option value="">Select Category</option>
-                {categ.map((c, index) => (
-                  <option key={index} value={c.category_name}>
-                    {c.category_name}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div className="form-group">

@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import "./admin.css";
 import { UserContext } from "../Context/UserContext";
 import AdminHeader from "./AdminHeader";
+import { css } from "@emotion/react";
+import { RingLoader } from "react-spinners";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { actions } = useContext(UserContext);
   const { authUser } = useContext(UserContext);
   const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false); // Add loading state
 
   useEffect(() => {
     authUser && navigate("/admin/blogs");
@@ -16,17 +19,20 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when submitting form
 
     try {
       const user = await actions.signIn(formData);
       if (user) {
         setFormData({});
+        setLoading(false); // Set loading to false after successful login
         navigate("/admin/blogs");
       } else {
         throw new Error("not signed in");
       }
     } catch (error) {
       console.log(error);
+      setLoading(false); // Set loading to false if there's an error
     }
   };
 
@@ -75,7 +81,13 @@ const AdminLogin = () => {
                 }}
               />
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" disabled={loading}>
+              {loading ? (
+                <RingLoader size={24} color={"#fff"} loading={loading} />
+              ) : (
+                "Login"
+              )}
+            </button>
           </form>
         </div>
       </div>

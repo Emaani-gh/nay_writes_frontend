@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -12,6 +12,7 @@ const CreateBlog = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [previewImage, setPreviewImage] = useState(null);
+  const [loading, setLoading] = useState(false); // Add loading state for button
 
   const handleChange = (e) => {
     const { name } = e.target;
@@ -32,11 +33,16 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when submitting the form
 
     const dataToSend = new FormData();
 
     for (const key in formData) {
-      dataToSend.append(key, formData[key]);
+      if (key === "image") {
+        dataToSend.append(key, formData[key]);
+      } else {
+        dataToSend.append(key, formData[key]);
+      }
     }
 
     try {
@@ -48,8 +54,11 @@ const CreateBlog = () => {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false); // Set loading to false after the request is completed
     }
   };
+
   const handleGetContent = (event, editor) => {
     const content = editor.getData();
     setFormData({ ...formData, content });
@@ -111,19 +120,6 @@ const CreateBlog = () => {
                   onChange={(e) => handleChange(e)}
                   required
                 />
-                {/* <select
-                name="category"
-                value={formData.category || ""}
-                onChange={(e) => handleChange(e)}
-                required
-              >
-                <option value="">Select Category</option>
-                {categ.map((c, index) => (
-                  <option key={index} value={c.category_name}>
-                    {c.category_name}
-                  </option>
-                ))}
-              </select> */}
               </div>
               <div className="form-group">
                 <label>Summary:</label>
@@ -166,11 +162,15 @@ const CreateBlog = () => {
                 type="file"
                 accept="image/*"
                 name="image"
-                required
                 onChange={(e) => handleChange(e)}
               />
             </div>
-            <button type="submit">Create Blog</button>
+            <button type="submit" disabled={loading}>
+              {" "}
+              {/* Disable button when loading */}
+              {loading ? "Creating..." : "Create Blog"}{" "}
+              {/* Change button text based on loading state */}
+            </button>
           </form>
         </div>
       </div>

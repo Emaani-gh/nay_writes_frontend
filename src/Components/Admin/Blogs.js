@@ -7,12 +7,15 @@ import { IoMdTrash } from "react-icons/io";
 import cookie from "react-cookies";
 import Cookies from "js-cookie";
 import AdminHeader from "./AdminHeader";
+import { css } from "@emotion/react";
+import { RingLoader } from "react-spinners";
 
 const Blogs = () => {
   const api = process.env.REACT_APP_API_URL;
 
   const [blogs, setBlogs] = useState([]);
   const [authUser, setAuthUser] = useState({});
+  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
 
   const fetchBlogs = async () => {
@@ -35,6 +38,8 @@ const Blogs = () => {
         console.error("Error fetching blogs:", error);
         navigate("/admin/login");
       }
+    } finally {
+      setLoading(false); // Set loading to false after fetching data, regardless of success or failure
     }
   };
 
@@ -56,11 +61,14 @@ const Blogs = () => {
   };
 
   const handleDelete = async (id) => {
+    setLoading(true); // Set loading to true when deleting a blog
     try {
       const res = await axios.delete(`${api}/blogs/${id}`);
       setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
     } catch (error) {
       console.log("Error Deleting", error);
+    } finally {
+      setLoading(false); // Set loading to false after deleting a blog, regardless of success or failure
     }
   };
 
@@ -80,45 +88,53 @@ const Blogs = () => {
             </Link>
           </div>
         </div>
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Blogger</th>
-                <th>Date</th>
-                <th>options</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {blogs.map(({ _id, title, blogger, updatedAt }, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{title}</td>
-                  <td>{blogger}</td>
-                  <td>{formatDate(updatedAt)}</td>
-                  <td className="options">
-                    <div>
-                      <Link to={`/admin/blog/${_id}`}>
-                        <MdEdit />
-                      </Link>
-
-                      <Link>
-                        <IoMdTrash
-                          onClick={(e) => {
-                            handleDelete(_id);
-                          }}
-                        />
-                      </Link>
-                    </div>
-                  </td>
+        {loading ? ( // Display loading spinner if loading is true
+          <div className="sweet-loading">
+            <RingLoader size={150} color={"#123abc"} loading={loading} />
+            Loading...
+          </div>
+        ) : (
+          // Render blogs if loading is false
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Blogger</th>
+                  <th>Date</th>
+                  <th>options</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+
+              <tbody>
+                {blogs.map(({ _id, title, blogger, updatedAt }, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{title}</td>
+                    <td>{blogger}</td>
+                    <td>{formatDate(updatedAt)}</td>
+                    <td className="options">
+                      <div>
+                        <Link to={`/admin/blog/${_id}`}>
+                          <MdEdit />
+                        </Link>
+
+                        <Link>
+                          <IoMdTrash
+                            onClick={(e) => {
+                              handleDelete(_id);
+                            }}
+                          />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );
